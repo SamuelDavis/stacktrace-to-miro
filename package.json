@@ -1,0 +1,16 @@
+{
+  "name": "stacktrace-to-miro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^2.2.1",
+    "snowpack": "^3.2.2"
+  }
+}
