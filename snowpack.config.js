@@ -3,8 +3,9 @@
 
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
-  exclude: [`${__dirname}/CNAME`],
   mount: {
+    public: "/",
+    src: "/src",
     /* ... */
   },
   plugins: [
