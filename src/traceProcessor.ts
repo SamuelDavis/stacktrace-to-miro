@@ -6,7 +6,7 @@ function traceFactory(input: RawTrace): Trace {
   if (type === TraceType.RETURN) {
     return {
       level: Number(level),
-      funcNum: Number(funcNum),
+      fnNum: Number(funcNum),
       returnValue: input[5],
     };
   }
@@ -16,7 +16,7 @@ function traceFactory(input: RawTrace): Trace {
   if (type === TraceType.EXIT) {
     return {
       level: Number(level),
-      funcNum: Number(funcNum),
+      fnNum: Number(funcNum),
       timeIndex: Number(timeIndex),
       memoryUsage: Number(memoryUsage),
     };
@@ -35,7 +35,7 @@ function traceFactory(input: RawTrace): Trace {
 
     return {
       level: Number(level),
-      funcNum: Number(funcNum),
+      fnNum: Number(funcNum),
       timeIndex: Number(timeIndex),
       memoryUsage: Number(memoryUsage),
       fnName,
@@ -48,15 +48,14 @@ function traceFactory(input: RawTrace): Trace {
     };
   }
 
-  throw new Error(
-    `Unrecognized type: ${type} (${JSON.stringify(input, null, 2)})`
-  );
+  throw new Error(`Unrecognized type: ${type} (${JSON.stringify(input)})`);
 }
 
 export default function parseStackTrace(input: string): Trace[] {
-  return input
+  return (input ?? "")
     .trim()
     .split("\n")
+    .filter(Boolean)
     .map((line) => line.split("\t"))
     .map(traceFactory);
 }

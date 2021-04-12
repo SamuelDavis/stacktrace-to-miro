@@ -26,19 +26,19 @@ export type Trace = EntryType | ExitType | ReturnType;
 
 type RecordType = {
   level: number;
-  funcNum: number;
+  fnNum: number;
 };
 
-type ReturnType = RecordType & {
+export type ReturnType = RecordType & {
   returnValue: any;
 };
 
-type ExitType = RecordType & {
+export type ExitType = RecordType & {
   timeIndex: number;
   memoryUsage: number;
 };
 
-type EntryType = ExitType & {
+export type EntryType = ExitType & {
   fnName: string;
   userDefined: boolean;
   file: string;
@@ -46,4 +46,34 @@ type EntryType = ExitType & {
   line: number;
   argc: number;
   argv: any[];
+};
+
+export function isEntry(trace: Trace): trace is EntryType {
+  return trace.hasOwnProperty("argv");
+}
+
+export function isExit(trace: Trace): trace is ExitType {
+  return !isEntry(trace) && trace.hasOwnProperty("timeIndex");
+}
+
+export function isReturn(trace: Trace): trace is ReturnType {
+  return trace.hasOwnProperty("returnValue");
+}
+
+export type TraceState = Partial<ReturnType & ExitType & EntryType>;
+
+export type Bounds = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+};
+
+export type Widget = object & {
+  id: string;
+  bounds: Bounds;
 };
